@@ -9,8 +9,6 @@ from functools import reduce
 import warnings
 
 warnings.simplefilter(action="ignore", category=RuntimeWarning)
-TMP_HOLD120 = []
-
 
 class E0V1E_45_Hyperopted_NonStableCoins(IStrategy):
     minimal_roi = {
@@ -82,29 +80,6 @@ class E0V1E_45_Hyperopted_NonStableCoins(IStrategy):
                 reduce(lambda x, y: x | y, conditions),
                 'enter_long'] = 1
         return dataframe
-
-    # def custom_exit(self, pair: str, trade: 'Trade', current_time: 'datetime', current_rate: float,
-    #                 current_profit: float, **kwargs):
-    #     dataframe, _ = self.dp.get_analyzed_dataframe(pair=pair, timeframe=self.timeframe)
-    #     current_candle = dataframe.iloc[-1].squeeze()
-
-    #     if trade.open_rate > current_candle["ma120"]:
-    #         if trade.id not in TMP_HOLD120:
-    #             TMP_HOLD120.append(trade.id)
-
-    #     if current_profit > 0:
-    #         if current_candle["fastk"] > self.sell_fastx.value:
-    #             return "fastk_profit_sell"
-
-    #     if current_profit > self.sell_loss_cci_profit.value:
-    #         if current_candle["cci"] > self.sell_loss_cci.value:
-    #             return "cci_loss_sell"
-
-    #     if trade.id in TMP_HOLD120 and current_candle["open"] < current_candle["ma120"]:
-    #         TMP_HOLD120.remove(trade.id)
-    #         return "ma120_sell"
-
-    #     return None
 
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[:, ['exit_long', 'exit_tag']] = (0, 'long_out')
