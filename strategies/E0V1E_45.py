@@ -31,7 +31,7 @@ class E0V1E_45(IStrategy):
         'stoploss_on_exchange_market_ratio': 0.99
     }
 
-    stoploss = -0.25
+    stoploss = -0.99
     trailing_stop = True
     trailing_stop_positive = 0.003
     trailing_stop_positive_offset = 0.03
@@ -96,12 +96,10 @@ class E0V1E_45(IStrategy):
 
         if current_profit > 0:
             if current_candle["fastk"] > self.sell_fastx.value:
-                remove_pubid(trade.id)
                 return "fastk_profit_sell"
 
         if current_profit > self.sell_loss_cci_profit.value:
             if current_candle["cci"] > self.sell_loss_cci.value:
-                remove_pubid(trade.id)
                 return "cci_loss_sell"
 
         if trade.id in TMP_HOLD120 and current_candle["open"] < current_candle["ma120"]:
